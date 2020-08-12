@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+    <main>
+        <div class="projekt_manager">
+            <textarea name="area" v-model="area" id="area" cols="30" rows="10"></textarea>
+            <button v-on:click="generovat()">Generate</button>
+        </div>
+        <h1>Tohle je losovac nahodnych projektu >>>> </h1>
+        <p>Je navrzen pomoci vuejs a funguje nabazi roboticky nahodneho procesu. Muzes pridavat projekty nahore jednotlive projekty odel carkou, jakmile budes spokojen s poctem tak staci zmacknout tlacitko dole. Muzes zaroven vybrat projekt, to znamena ze se prida do DB probihajich projektu nebo ostranit projekt z vyberu.</p>
+        <article v-if="projekty_can == true">
+            <button v-on:click="vyber_nahodne">Vyber mi projekt</button>
+            <div v-if="nahodny_projekt != ''">
+                <button v-on:click="select">vybrat si tento</button>
+            </div><div v-if="nahodny_projekt != ''">
+                <button v-on:click="deleter">Odebrat z vyberu</button>
+            </div>
+        </article>
+        <div>
+            <h2>{{ nahodny_projekt }}</h2>
+        </div>
+    </main>
+    <script>
+        const apka = new Vue({
+            el: "main",
+            data:{
+                area:"",
+                projekty:[],
+                vybrane_projekty:[],
+                nahodny_projekt:'',
+                projekty_can : false,
+                index:-1,
+            },
+            methods:{
+                generovat(){
+                    this.projekty = this.area.split(", ");
+                    this.projekty_can = true;
+                },
+                select(){
+                    this.vybrane_projekty.push(this.nahodny_projekt);
+                    this.projekty.splice(this.index, 1);
+                    this.nahodny_projekt='';
+                },
+                deleter(){
+                    this.projekty.splice(this.index, 1);
+                    this.nahodny_projekt='';
+                },
+                vyber_nahodne(){
+                    var NahodnyProjekt = Math.floor(Math.random() * this.projekty.length);
+                    var index = NahodnyProjekt;
+                    this.nahodny_projekt=this.projekty[NahodnyProjekt];
+                    if(this.projekty <= 0){
+                        alert("Zadne projekty uz nejsou!!")
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
