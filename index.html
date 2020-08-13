@@ -25,42 +25,18 @@
         <div>
             <h2>{{ nahodny_projekt }}</h2>
         </div>
+        <div class="view">
+            <span v-if="projekty != ''">
+                <h3>Mozne projekty</h3><p v-for="projekt in projekty">{{ projekt }}</p>
+            </span>
+            <span v-if="vybrane_projekty != ''">
+                <h3>Promihajici projekty</h3><p v-for="projekt in vybrane_projekty">{{ projekt }}</p>
+            </span>
+            <span v-if="odstranene_projekty != ''">
+                <h3>Odstraneneni projekt</h3><p v-for="projekt in odstranene_projekty">{{ projekt }}</p>
+            </span>
+        </div>
     </main>
-    <script>
-        const apka = new Vue({
-            el: "main",
-            data:{
-                area:"",
-                projekty:[],
-                vybrane_projekty:[],
-                nahodny_projekt:'',
-                projekty_can : false,
-                index:-1,
-            },
-            methods:{
-                generovat(){
-                    this.projekty = this.area.split(", ");
-                    this.projekty_can = true;
-                },
-                select(){
-                    this.vybrane_projekty.push(this.nahodny_projekt);
-                    this.projekty.splice(this.index, 1);
-                    this.nahodny_projekt='';
-                },
-                deleter(){
-                    this.projekty.splice(this.index, 1);
-                    this.nahodny_projekt='';
-                },
-                vyber_nahodne(){
-                    var NahodnyProjekt = Math.floor(Math.random() * this.projekty.length);
-                    var index = NahodnyProjekt;
-                    this.nahodny_projekt=this.projekty[NahodnyProjekt];
-                    if(this.projekty <= 0){
-                        alert("Zadne projekty uz nejsou!!")
-                    }
-                }
-            }
-        })
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
